@@ -3,16 +3,16 @@ from mysql.connector import Error
 
 def create_database():
     try:
-        # Connect to MySQL server (no database specified yet)
+        # Connect to MySQL server (no database specified)
         connection = mysql.connector.connect(
-            host='localhost',       # change if your host is different
+            host='localhost',       # change if needed
             user='root',            # your MySQL username
-            password='123@Alayode'  # your MySQL password
+            password='your_password'  # your MySQL password
         )
 
         if connection.is_connected():
             cursor = connection.cursor()
-            # Create database if it does not exist
+            # Create database if it does not exist (no SELECT or SHOW!)
             cursor.execute("CREATE DATABASE IF NOT EXISTS alx_book_store")
             print("Database 'alx_book_store' created successfully!")
 
@@ -20,11 +20,10 @@ def create_database():
         print(f"Error while connecting to MySQL: {e}")
 
     finally:
-        if connection.is_connected():
+        if 'cursor' in locals():
             cursor.close()
+        if 'connection' in locals() and connection.is_connected():
             connection.close()
-            # Optional message to confirm disconnection
-            # print("MySQL connection is closed")
 
 if __name__ == "__main__":
     create_database()
